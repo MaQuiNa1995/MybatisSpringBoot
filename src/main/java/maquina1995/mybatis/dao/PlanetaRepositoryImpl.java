@@ -24,8 +24,8 @@ public class PlanetaRepositoryImpl implements PlanetaRepository {
 	private final SqlSession sqlSession;
 
 	@Override
-	public Planeta findByNombre(String nombre) {
-		return this.sqlSession.selectOne("findByNombre", nombre);
+	public Planeta findById(Long id) {
+		throw new UnsupportedOperationException("falta de completar esta parte :)");
 	}
 
 }

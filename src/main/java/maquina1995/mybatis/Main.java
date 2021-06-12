@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import lombok.extern.slf4j.Slf4j;
+import maquina1995.mybatis.dto.PlanetaDto;
 import maquina1995.mybatis.service.PlanetaService;
 
 @Slf4j
@@ -22,14 +23,57 @@ public class Main implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 
-		log.info("Find By Nombre: ");
-		log.info(planetaService.findByNombre("Euclides")
+		PlanetaDto planetaDto = PlanetaDto.builder()
+		        .climatologia("Contaminado")
+		        .fauna("Desolada")
+		        .flora("Desolada")
+		        .hostilidadCentinelas("Nula")
+		        .nombre("Calypso")
+		        .numeroLunas(3)
+		        .temperaturaCentigrados(576.6f)
+		        .temperaturaFahrenhait(576.6f + 273)
+		        .build();
+
+		Long id = planetaService.create(planetaDto);
+		log.info("----------- Insert -----------");
+		log.info(String.valueOf(id));
+
+		log.info("----------- Find -----------");
+		log.info(String.valueOf(planetaService.findById(id)));
+
+		log.info("----------- Find All -----------");
+		planetaService.findAll()
+		        .map(PlanetaDto::toString)
+		        .forEach(log::info);
+
+		log.info("----------- Update -----------");
+		log.info("Haciendo update al registro con id 1");
+		log.info(planetaService.findById(1L)
 		        .toString());
 
-		log.info("Find By Nombre2: ");
-		log.info(planetaService.findByNombre2("Euclides")
+		PlanetaDto planetaDtoUpdate = PlanetaDto.builder()
+		        .climatologia("Cambiado")
+		        .fauna("Cambiado")
+		        .flora("Cambiado")
+		        .hostilidadCentinelas("Cambiado")
+		        .nombre("Cambiado")
+		        .numeroLunas(0)
+		        .temperaturaCentigrados(0F)
+		        .build();
+
+		log.info("Columnas Afectadas {}", planetaService.update(planetaDtoUpdate, 1L));
+		log.info(planetaService.findById(1L)
 		        .toString());
 
+		log.info("----------- Delete -----------");
+		log.info("Delete del registro con id 1");
+		log.info(planetaService.findById(1L)
+		        .toString());
+		log.info("Columnas Afectadas {}", planetaService.deleteById(1L));
+		log.info("Haciendo un find all para demostrar el delete");
+		planetaService.findAll()
+		        .map(PlanetaDto::toString)
+		        .forEach(log::info);
 	}
 
 }

@@ -1,6 +1,6 @@
 create table Planeta
 (
-   id integer not null,
+   id integer AUTO_INCREMENT,
    nombre varchar(255), 
    fauna varchar(255),
    centinelas varchar(255),

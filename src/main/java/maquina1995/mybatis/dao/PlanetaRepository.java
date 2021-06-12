@@ -4,6 +4,6 @@ import maquina1995.mybatis.domain.Planeta;
 
 public interface PlanetaRepository {
 
-	Planeta findByNombre(String nombre);
+	Planeta findById(Long id);
 
 }
